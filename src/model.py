@@ -28,3 +28,15 @@ class DeepfakeAcousticCNN(nn.Module):
         x = self.conv_block1(x)
         x = self.conv_block2(x)
         return self.classifier(x).squeeze(-1)
+
+class SemanticSpoofClassifier(nn.Module):
+    def __init__(self):
+        super(SemanticSpoofClassifier, self).__init__()
+        self.fc = nn.Sequential(
+            nn.Linear(768, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+            nn.Linear(64, 1)
+        )
+    def forward(self, x):
+        return self.fc(x).squeeze(-1)
